@@ -1,3 +1,7 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get "*path", to: "application#frontend", constraints: ->(request) { frontend_request?(request) }
+
+  def frontend_request?(request)
+    !request.xhr? && request.format.html?
+  end
 end
